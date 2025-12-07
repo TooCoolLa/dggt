@@ -137,8 +137,8 @@ def main():
         for batch in dataloader:
             images = batch['images'].to(device)
             sky_mask = batch['masks'].to(device).permute(0, 1, 3, 4, 2)
-            gt_dy_map = batch['dynamic_mask'].to(device)
-            gt_depth = batch['gt_depth'].to(device)
+            gt_dy_map = batch.get('dynamic_mask', torch.zeros_like(images)).to(device)
+            gt_depth = batch.get('gt_depth', torch.zeros(images.shape[0], images.shape[1], images.shape[-2], images.shape[-1], 1)).to(device)
 
             bg_mask = (sky_mask == 0).any(dim=-1)
             timestamps = batch['timestamps'][0].to(device)
