@@ -438,7 +438,7 @@ class WaymoOpenDataset(Dataset):
                     dynamic_mask = load_and_preprocess_images(dy_mask_seq)  # [S*3, C, H, W]
                 input_dict["dynamic_mask"] = dynamic_mask
 
-            if len(self.depth_flow_paths) > 0:
+            if len(self. depth_flow_paths) > 0 and idx < len(self.depth_flow_paths) and len(self.depth_flow_paths[idx]) > 0:
                 if self.views == 1:
                     depth_seq = [self.depth_flow_paths[idx][i] for i in indices]
                     depth_data = load_and_preprocess_flow(depth_seq, None, None, images.shape[2], images.shape[3])
